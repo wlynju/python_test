@@ -82,7 +82,6 @@ def FtpToServer( dtTask, localFile ):
 	remoteFile = os.path.join('/disk/cat/fruit/grib_gfs/',taskStr, os.path.basename( localFile ))
 	MFtpUpload( '10.135.34.26', '527', 'root', '86042300', localFile, remoteFile )
 
-
 #------------------------------------
 def ToDoTask( dtTask, fh, fileType = 'grib2',isSend = False ):
     taskStr = dtTask.strftime('%Y.%m/%Y%m%d%H')	
@@ -103,13 +102,11 @@ def ToDoTask( dtTask, fh, fileType = 'grib2',isSend = False ):
         print('[Error] No GFS grib generated !')
         return
 
-
     for f in files:
         print( '[Info] Found generated file : ' + f )
        # print("ok4"+os.path.abspath(f))
         if isSend:
             FtpToServer( dtTask,f )
-
 
     return False
 	
@@ -119,6 +116,7 @@ def DoTask( dtTask, fileType = 'grib2', isSend = False ):
     for fh in range(0, 97, 3):
        ToDoTask( dtTask, fh, fileType, isSend )
     return
+	
 #------------------------------------
 #- Main program
 if __name__ == '__main__':
@@ -134,8 +132,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', metavar='yymmdd', help='Start date of historical run')
     parser.add_argument('-e', metavar='yymmdd', help='End date of historical run')
     parser.add_argument('timeString', metavar='yymmddHH', help='Initial date in CST, 00 for real for real time task', nargs='*', default='00')
-   
-   
+      
     args = parser.parse_args()
     isSend = True if args.u else False
     fileType = 'grib2' if args.grib or not args.nc else 'nc'
